@@ -24,24 +24,26 @@
 			<div class="circular_listFirst"></div>
 			<div class="circular_listFirst"></div>
 			</div>	
-			<div class="vote">		
-				<label for="yname">Your name</label>
-				<input type="text" id="yname" name="yourname" placeholder="Your name (Optional)">
+			<div class="vote">
+				<form action="/postVote" method="POST">	
+					<label for="yname">Your name</label>
+					<input type="text" id="yname" name="yourname" placeholder="Your name (Optional)">
 
-				<label for="ysong">Your song (URL)</label>
-				<input type="text" id="ysong" name="yoursong" placeholder="Your song (URL) (Required)">
+					<label for="ysong">Your song (URL)</label>
+					<input type="text" id="ysong" name="yoursong" placeholder="Your song (URL) (Required)">
 
-				<label for="ystyle">Style you wanna hear more often?</label>
-				<select id="ystyle" name="yourstyle">
-					<option value="nil">N/A</option>
-					<option value="dubstep">Dubstep</option>
-					<option value="dnb">Drum and Bass</option>
-					<option value="rap">Rap</option>
-					<option value="pop">Pop</option>
-					<option value="rock">Rock</option>
-					<option value="trap">Trap</option>					
-				</select>  
-			<input type="submit" value="VOTE NOW!">
+					<label for="ystyle">Style you wanna hear more often?</label>
+					<select id="ystyle" name="yourstyle">
+						<option value="nil">N/A</option>
+						<option value="dubstep">Dubstep</option>
+						<option value="dnb">Drum and Bass</option>
+						<option value="rap">Rap</option>
+						<option value="pop">Pop</option>
+						<option value="rock">Rock</option>
+						<option value="trap">Trap</option>					
+					</select>  
+					<input type="submit" value="VOTE NOW!">
+				</form>
 				
 			</div>
 		
