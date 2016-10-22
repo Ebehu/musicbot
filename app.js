@@ -16,7 +16,28 @@ var voteSchema = new Schema({
     timestamps: true
 });
 
+var voterSchema = new Schema({
+    ipAddr: String
+},{
+    timestamps: true
+});
+
 var Vote = mongoose.model('Vote',voteSchema);
+var Voter = mongoose.model('Voter',voterSchema);
+
+var postVote = (req,res) => {
+        var youtubelink = req.body.yoursong.match(/(https?\:\/\/)?(www\.)?youtu(\.be\/|be\.com\/watch\?v\=)[a-zA-Z0-9\_\-]{11}?/gmi);
+        if (youtubelink !== null)
+        {
+            var newVote = new Vote({name: req.body.yourname, song: youtubelink[0], style: req.body.yourstyle});
+            newVote.save((err) => {console.log(err)});
+            res.redirect('/musicbot.html');
+            
+        }
+        else {
+            res.send('Bad Youtube Link!');
+        }
+}
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
@@ -92,17 +113,47 @@ app.get('/postTopToFile/:howMany/:password',(req,res)=>{
 
 
 app.post('/postVote',(req,res)=>{
-    var youtubelink = req.body.yoursong.match(/(https?\:\/\/)?(www\.)?youtu(\.be\/|be\.com\/watch\?v\=)[a-zA-Z0-9\_\-]{11}?/gmi);
-    if (youtubelink !== null)
-    {
-        var newVote = new Vote({name: req.body.yourname, song: youtubelink[0], style: req.body.yourstyle});
-        newVote.save((err) => {console.log(err)});
-        res.redirect('/musicbot.html');
-    }
-    else {
-        res.send('Bad Youtube Link!');
-    }
+    
+    //Keressen egyet, ha nincs még, adja hozzá
+    //különben, ha megvan már akkor nézze meg h 1 napon belül szavazott e.
+    // ha 1 napon belül van akk ne engedje újra, különben igen, kivéve ha 192.168.1.1, akkor mindig engedjen szavazni
+    
 
+    Voter.findOne({ ipAddr: req.connection.remoteAddress }, function(err,voter){
+        if (!err)
+        {
+            if(!voter){
+                var newVoter = new Voter({ ipAddr: req.connection.remoteAddress}); //not known
+                newVoter.save();
+                postVote(req,res);
+            }
+            else{   //known
+                var updatedDate = new Date(voter.updatedAt);
+                updatedDate.setDate(updatedDate.getDate() + 1); 
+                if (updatedDate < new Date()){
+                    postVote(req,res);
+                }
+                else{
+                    res.send("You have already voted in 24 hours. You can vote again at " + updatedDate.getFullYear() + ". " +
+                    (updatedDate.getMonth() + 1) + ". " +
+                    updatedDate.getDate() + ". " +
+                    updatedDate.getHours() + ":" + updatedDate.getMinutes() + ":" + updatedDate.getSeconds());
+                }
+            }
+        }
+    });
+    
+});
+
+
+app.get('/napi1Teszt',(req,res)=>{
+    
+});
+
+app.get('/voters',(req,res)=>{
+    Voter.find().exec((err,sendVoters)=>{
+        res.send(sendVoters);
+    });
 });
 
 app.listen(3000);
