@@ -102,6 +102,28 @@ input[type=submit]:hover {
 }
 
 
+.avhBackground {	
+	width: 546px;
+	height: 533px;
+	margin-top: 50px;
+	margin-bottom: 50px;
+	margin-left: auto;
+	margin-right: auto;
+	background-color: black;
+
+}
+
+.alli {
+	margin-left: auto;
+	width: 271px;
+	height: 533px;
+	display: inline-block;
+	background: url("alliance.jpg");
+	padding : 0;
+	opacity: 0.4;
+}
+
+
 .horde {
 	width: 271px;
 	height: 533px;
@@ -119,7 +141,7 @@ input[type=submit]:hover {
 .horde:hover {
 	opacity: 1;
 }
-
+	
 
 
 
