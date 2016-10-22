@@ -1,14 +1,60 @@
 
 body {
 	font-family: 'Roboto', sans-serif;
-		background: -webkit-linear-gradient(left, rgba(74,161,242,1) 0%, rgba(22,101,192,1) 100%);
+	background: -webkit-linear-gradient(left, rgba(74,161,242,1) 0%, rgba(22,101,192,1) 100%);
 	background: -o-linear-gradient(left, rgba(74,161,242,1) 0%, rgba(22,101,192,1) 100%);
 	background: linear-gradient(to right, rgba(74,161,242,1) 0%, rgba(22,101,192,1) 100%);
 	margin: 0;
 	
 }
-header {
+
+.indexContent {
+	width: 1028px;
+	margin-top: 128px;
+	margin-bottom: auto;
+	margin-left: auto;
+	margin-right: auto;
+	
+}
+
+.indexContentContainer {
+	display: inline-block;
+	width: 512px;
+	height: 512px;
+	background-color: black;
+}
+
+.musicbot {
+	display: inline-block;
+	width: 512px;
+	height: 512px;
+	background: url("musicbot.png");
+	opacity: 0.4;
+}
+
+.esports {
+	display: inline-block;
+	width: 512px;
+	height: 512px; 
+	background: url("esport.png");
+	opacity: 0.4;
+	margin-right: ;
+}
+
+.musicbot:hover {
+	opacity: 1;
+}
+
+.esports:hover {
+	opacity: 1;
+}
+
+.content {
 	width: 50%;
+	margin-left: auto;
+	margin-right: auto;
+}
+header {
 	margin-left: auto;
 	margin-right: auto;
 	text-shadow: 0 1px 0.1px #000;
@@ -16,7 +62,7 @@ header {
 
 header  h1{
 	text-align: center;
-	font-size: 128px;
+	font-size: 64px;
 	color: #fff;
 	margin: 0;
 	padding: 0;
@@ -26,8 +72,7 @@ header  h1{
 header p{
 	font-size: 100%;
 	text-align: center;
-	color: #fff;
-	
+	color: #fff;	
 	margin: 0;
 	padding: 0;
 }
@@ -36,20 +81,19 @@ header p{
 	text-shadow: 0 1px 0.1px #000;
 	color:#fff;
 	text-align: center;
-	width: 50%;
 	margin-left: auto;
 	margin-right: auto;
-    margin-top: 50px;
+    margin-top: 48px;
 	}
 
 .circular_listFirst {
 	
 	display: inline-block;
-	margin-left: 25px;
-	margin-right: 25px;
+	margin-left: 24px;
+	margin-right: 24px;
 	width: 100px;
 	height: 100px;
-	border-radius: 3px;
+	border-radius: 2px;
 	box-shadow: 0 0 20px 1px #000;
 	background: url("pitbull-globalization.jpg");
 	background-size: 100% 100%;
@@ -65,14 +109,13 @@ header p{
 	font-size: 150%;
 	text-align: center;
 	color: #333;
-    width: 50%;
 	margin-top: 50px;
 	margin-left: auto;
 	margin-right: auto;
 	border-radius: 5px;
 	background-color: rgba(255, 255, 255, 0.35);
     
-    padding: 20px;
+    padding: 24px;
 	box-shadow: 0 0 30px 0.1px #000;
 }
 
@@ -90,7 +133,7 @@ input[type=submit] {
     width: 100%;
     background-color: #666;
     color: white;
-    padding: 14px 20px;
+    padding: 12px 24px;
     margin: 8px 0;
     border: none;
     border-radius: 4px;
@@ -101,44 +144,69 @@ input[type=submit]:hover {
     background-color: #333;
 }
 
+#gamesTitle {
+	text-align: center;
+	color: #fff;
+	text-shadow: 0 1px 0.1px #000;
+	margin-top: 48px;
+}
 
-.avhBackground {	
-	width: 542px;
-	height: 533px;
-	margin-top: 50px;
-	margin-bottom: 50px;
+.gamesBackground {	
+	width: 768px;
+	height: 256px;
+
+	margin-bottom: 48px;
 	margin-left: auto;
 	margin-right: auto;
 	background-color: black;
 
 }
 
-.alli {
-	margin-left: auto;
-	width: 271px;
-	height: 533px;
-	display: inline-block;
-	background: url("alliance.jpg");
-	padding : 0;
-	opacity: 0.4;
-}
 
 
-.horde {
-	width: 271px;
-	height: 533px;
+
+.lol {
+	width: 256px;
+	height: 256px;
 	display: inline-block;
-	background: url("horde.png");
+	background: url("lol.png");
 	margin-right: auto;
 	padding : 0;
 	opacity: 0.4;
 }
 
-.alli:hover {
+.wow {
+	width: 256px;
+	height: 256px;
+	display: inline-block;
+	background: url("wow.png");
+	padding : 0;
+	opacity: 0.4;
+}
+
+.ow {
+	width: 256px;
+	height: 256px;
+	display: inline-block;
+	background: url("overwatch.png");
+	margin-right: auto;
+	padding : 0;
+	opacity: 0.4;
+}
+
+.ow {
+	
+}
+
+.wow:hover {
 	opacity: 1;
 }
 
-.horde:hover {
+.lol:hover {
+	opacity: 1;
+}
+
+.ow:hover {
 	opacity: 1;
 }
 	
