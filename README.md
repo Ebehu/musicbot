@@ -5,3 +5,5 @@
 * Require password to generate Toplist txt
 * Ability to restart bot after regenerating Toplist txt
 * Check if YT video exists when voting
+* youtube videok listázása + delete button
+* text-box(txt generálás) 
