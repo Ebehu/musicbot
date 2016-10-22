@@ -55,33 +55,39 @@ app.get('/getTop/:howMany',(req,res)=>{
     });
 });
 
-app.get('/postTopToFile/:howMany',(req,res)=>{
-    
-    Vote.find().exec((err,sendVotes)=>{
-        var topList = {};
-        sendVotes.forEach((val)=>{
-            if (topList[val.song] >= 0) {
-                topList[val.song]++;
-            }
-            else{
-                topList[val.song] = 1;
-            }
+app.get('/postTopToFile/:howMany/:password',(req,res)=>{  
+    if(req.params.password == "gbhDAS3!RgŰCIKŐÖ+öaÉ4igq3AQ+!JG")
+    {
+        Vote.find().exec((err,sendVotes)=>{
+            var topList = {};
+            sendVotes.forEach((val)=>{
+                if (topList[val.song] >= 0) {
+                    topList[val.song]++;
+                }
+                else{
+                    topList[val.song] = 1;
+                }
+            });
+            var tuples = [];
+            for (let key in topList) tuples.push([key, topList[key]]);
+            tuples.sort((a,b)=>{
+                a = a[1];
+                b = b[1];
+                return a < b ? 1 : (a > b ? -1 : 0);
+            });
+            var titles = tuples.map(x => x[0]);
+            titles.splice(req.params.howMany,titles.length);
+            var finalString = titles.reduce((acc,cur) => acc+cur + '\n', "");
+            fs.writeFile('/home/krisz/MusicBot/config/autoplaylist.txt',finalString, (err) => {
+                if (err) res.send(err);
+            });
+            res.send("done");
         });
-        var tuples = [];
-        for (let key in topList) tuples.push([key, topList[key]]);
-        tuples.sort((a,b)=>{
-            a = a[1];
-            b = b[1];
-            return a < b ? 1 : (a > b ? -1 : 0);
-        });
-        var titles = tuples.map(x => x[0]);
-        titles.splice(req.params.howMany,titles.length);
-        var finalString = titles.reduce((acc,cur) => acc+cur + '\n', "");
-        fs.writeFile('/home/krisz/MusicBot/config/autoplaylist.txt',finalString, (err) => {
-            if (err) res.send(err);
-        });
-        res.send("done");
-    });
+    }
+    else{
+        res.send("wrong password");
+    } 
+   
 });
 
 
@@ -91,7 +97,7 @@ app.post('/postVote',(req,res)=>{
     {
         var newVote = new Vote({name: req.body.yourname, song: youtubelink[0], style: req.body.yourstyle});
         newVote.save((err) => {console.log(err)});
-        res.redirect('/');
+        res.redirect('/musicbot.html');
     }
     else {
         res.send('Bad Youtube Link!');
