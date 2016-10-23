@@ -12,6 +12,7 @@
 }*/
 
 $(document).ready(function () {
+    $('.alert').hide();
     $('form').submit(function (event) {
         var formData = {
             'yourname': $('input[name=yourname]').val(),
@@ -26,9 +27,13 @@ $(document).ready(function () {
             encode: true
         }).done(function (data) {
             if(data.success){
-                alert(data.message); //sikerült
+                $('#successAlert').show();
+                $('#successAlert .messageText').text(data.message);
+                //alert(data.message); //sikerült
             } else{
-                alert(data.message); //nem sikerült
+                $('#dangerAlert').show();
+                $('#dangerAlert .messageText').text(data.message);
+                //alert(data.message); //nem sikerült
             }
                 
         });
