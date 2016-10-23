@@ -48,50 +48,46 @@ body {
 	opacity: 1;
 }
 
-#indexTitle {
-	margin-top: 48px;
-	color: #fff;
-	text-align: center;
-}
-
-#indexTitle  h1{
-	font-size: 64px;	
-	margin: 0;
-	padding: 0;	
-}
-
-#indexTitle p{
-	font-size: 100%;
-	margin: 0;
-	padding: 0;
-}
-
 .content {
 	width: 50%;
 	margin-left: auto;
 	margin-right: auto;
 }
 header {
+	width: 50%;
 	margin-left: auto;
 	margin-right: auto;
 	text-shadow: 0 1px 0.1px #000;
 }
 
-header  h1{
+.titles {
+	text-align: center;
+	color: #fff;
+	text-shadow: 0 1px 0.1px #000;
+	margin-top: 48px;
+}
+
+.titles h1{
 	text-align: center;
 	font-size: 64px;
 	color: #fff;
 	margin: 0;
 	padding: 0;
-	
 }
 
-header p{
+.titles p{
 	font-size: 100%;
 	text-align: center;
 	color: #fff;	
 	margin: 0;
 	padding: 0;
+}
+
+.titles h2{
+	text-align: center;
+	margin: 0;
+	padding: 0;
+	
 }
 
 .circleContainer {
@@ -161,11 +157,17 @@ input[type=submit]:hover {
     background-color: #333;
 }
 
-#gamesTitle {
-	text-align: center;
-	color: #fff;
-	text-shadow: 0 1px 0.1px #000;
-	margin-top: 48px;
+
+#howtojoinLink {
+	color: #333;
+	width: 40%;
+	height: 32px;
+	margin-left: auto;
+	margin-right: auto;
+	margin-top: 0;
+	background-color: white;
+	border: 1px solid #ccc;
+	border-radius: 4px;
 }
 
 .gamesBackgroundContainer {	
@@ -228,7 +230,20 @@ input[type=submit]:hover {
 .ow:hover {
 	opacity: 1;
 }
-	
+
+a:link {
+    color: #666;
+	text-decoration: none;
+}
+
+a:visited {
+    color: #666;
+}
+
+a:hover {
+    color: #333;
+}
+
 
 
 
