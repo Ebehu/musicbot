@@ -31,11 +31,12 @@ var postVote = (req,res) => {
         {
             var newVote = new Vote({name: req.body.yourname, song: youtubelink[0], style: req.body.yourstyle});
             newVote.save((err) => {console.log(err)});
-            res.redirect('/musicbot.html');
+            res.send({'success': true, 'message': 'Vote Successful!'});
+            //res.redirect('/musicbot.html');
             
         }
         else {
-            res.send('Bad Youtube Link!');
+            res.send({'success': false, 'message': 'Bad Youtube Link!'});
         }
 }
 
@@ -139,15 +140,18 @@ app.post('/postVote',(req,res)=>{
             }
             else{   //known
                 var updatedDate = new Date(voter.updatedAt);
-                updatedDate.setDate(updatedDate.getDate() + 1); 
+                updatedDate.setTime(updatedDate.getTime() + 60*60*1000); 
+                console.log(updatedDate);
                 if (updatedDate < new Date()){
+                    voter.updatedAt = new Date();
+                    voter.save();
                     postVote(req,res);
                 }
                 else{
-                    res.send("You have already voted in 24 hours. You can vote again at " + updatedDate.getFullYear() + ". " +
+                    res.send({'success':false,'message':"You have already voted in an hour. You can vote again at " + updatedDate.getFullYear() + ". " +
                     (updatedDate.getMonth() + 1) + ". " +
                     updatedDate.getDate() + ". " +
-                    updatedDate.getHours() + ":" + updatedDate.getMinutes() + ":" + updatedDate.getSeconds());
+                    updatedDate.getHours() + ":" + updatedDate.getMinutes() + ":" + updatedDate.getSeconds()});
                 }
             }
         }

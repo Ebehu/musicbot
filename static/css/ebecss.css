@@ -27,7 +27,7 @@ body {
 	display: inline-block;
 	width: 512px;
 	height: 512px;
-	background: url("musicbot.png");
+	background: url("../img/musicbot.png");
 	opacity: 0.4;
 }
 
@@ -35,9 +35,9 @@ body {
 	display: inline-block;
 	width: 512px;
 	height: 512px; 
-	background: url("esport.png");
+	background: url("../img/esport.png");
 	opacity: 0.4;
-	margin-right: ;
+	margin-right: 0
 }
 
 .musicbot:hover {
@@ -108,7 +108,7 @@ header {
 	height: 100px;
 	border-radius: 2px;
 	box-shadow: 0 0 20px 1px #000;
-	background: url("pitbull-globalization.jpg");
+	background: url("../img/pitbull-globalization.jpg");
 	background-size: 100% 100%;
 	transform: scale(1);
 	transition: all 0.10s ease-out;
@@ -119,9 +119,9 @@ header {
 }
 
 .vote {
-	font-size: 150%;
+	font-size: 130%;
 	text-align: center;
-	color: #333;
+	color: #fff;
 	margin-top: 50px;
 	margin-left: auto;
 	margin-right: auto;
@@ -130,6 +130,9 @@ header {
     
     padding: 24px;
 	box-shadow: 0 0 30px 0.1px #000;
+}
+.vote select {
+	color: #000;
 }
 
 input[type=text], select {
@@ -140,6 +143,7 @@ input[type=text], select {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+	color:black;
 }
 
 input[type=submit] {
@@ -160,7 +164,6 @@ input[type=submit]:hover {
 
 #howtojoinLink {
 	color: #333;
-	width: 40%;
 	height: 32px;
 	margin-left: auto;
 	margin-right: auto;
@@ -192,7 +195,7 @@ input[type=submit]:hover {
 	width: 256px;
 	height: 256px;
 	display: inline-block;
-	background: url("lol.png");
+	background: url("../img/lol.png");
 	padding : 0;
 	opacity: 0.4;
 }
@@ -201,7 +204,7 @@ input[type=submit]:hover {
 	width: 256px;
 	height: 256px;
 	display: inline-block;
-	background: url("wow.png");
+	background: url("../img/wow.png");
 	padding : 0;
 	opacity: 0.4;
 }
@@ -210,7 +213,7 @@ input[type=submit]:hover {
 	width: 256px;
 	height: 256px;
 	display: inline-block;
-	background: url("overwatch.png");
+	background: url("../img/overwatch.png");
 	padding : 0;
 	opacity: 0.4;
 }
