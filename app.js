@@ -75,30 +75,40 @@ app.get('/getTop/:howMany',(req,res)=>{
         res.send(tuples);
     });
 });
-
+var votesToList = (sendVotes) => {
+    
+        var topList = {};
+        sendVotes.forEach((val)=>{
+            if (topList[val.song] >= 0) {
+                topList[val.song]++;
+            }
+            else{
+                topList[val.song] = 1;
+            }
+        });
+        return topList;
+}
+var listToArray = (list) => {
+    var tuples = [];
+    for (let key in list) tuples.push([key, list[key]]);
+    tuples.sort((a,b)=>{
+        a = a[1];
+        b = b[1];
+        return a < b ? 1 : (a > b ? -1 : 0);
+    });
+    return tuples;
+}
 app.get('/postTopToFile/:howMany/:password',(req,res)=>{  
     if(req.params.password == "gbhDAS3!RgŰCIKŐÖ+öaÉ4igq3AQ+!JG")
     {
         Vote.find().exec((err,sendVotes)=>{
-            var topList = {};
-            sendVotes.forEach((val)=>{
-                if (topList[val.song] >= 0) {
-                    topList[val.song]++;
-                }
-                else{
-                    topList[val.song] = 1;
-                }
-            });
-            var tuples = [];
-            for (let key in topList) tuples.push([key, topList[key]]);
-            tuples.sort((a,b)=>{
-                a = a[1];
-                b = b[1];
-                return a < b ? 1 : (a > b ? -1 : 0);
-            });
+            var topList = votesToList(sendVotes);
+            var tuples = listToArray(topList);
             var titles = tuples.map(x => x[0]);
             titles.splice(req.params.howMany,titles.length);
+
             var finalString = titles.reduce((acc,cur) => acc+cur + '\n', "");
+            
             fs.writeFile('/home/krisz/MusicBot/config/autoplaylist.txt',finalString, (err) => {
                 if (err) res.send(err);
             });
