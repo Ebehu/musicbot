@@ -26,6 +26,7 @@ var Vote = mongoose.model('Vote', voteSchema);
 var Voter = mongoose.model('Voter', voterSchema);
 
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
@@ -85,6 +86,33 @@ app.get('/getTop/:howMany', (req, res) => {
     });
 });
 
+<<<<<<< HEAD
+=======
+app.get('/admin',(req,res)=>{
+    Vote.find().exec((err,votes)=>{
+        var list = votesToList();
+        res.send(list);
+    });
+})
+
+setInterval(() => console.log("dikk"), 2000);
+
+//setInterval(renderVotes,10*60*1000);
+
+var renderVotes = sendVotes => {
+    var topList = votesToList(sendVotes);
+    var tuples = listToArray(topList);
+    var titles = tuples.map(x => x[0]);
+    titles.splice(req.params.howMany, titles.length);
+
+    var finalString = titles.reduce((acc, cur) => acc + cur + '\n', "");
+
+    fs.writeFile('/home/krisz/MusicBot/config/autoplaylist.txt', finalString, (err) => {
+        if (err) console.log(err);
+    });
+};
+
+>>>>>>> 60af49c6b79e4219bf0052d795127ec05b65dab9
 app.get('/postTopToFile/:howMany/:password', (req, res) => {
     if (req.params.password == "gbhDAS3!RgŰCIKŐÖ+öaÉ4igq3AQ+!JG") {
         Vote.find().exec((err, sendVotes) => {
