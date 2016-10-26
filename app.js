@@ -26,12 +26,36 @@ var Vote = mongoose.model('Vote', voteSchema);
 var Voter = mongoose.model('Voter', voterSchema);
 
 
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
 
 app.use(express.static('static'));
+
+var votesToList = (sendVotes) => {
+
+    var topList = {};
+    sendVotes.forEach((val) => {
+        if (topList[val.song] >= 0) {
+            topList[val.song]++;
+        } else {
+            topList[val.song] = 1;
+        }
+    });
+    return topList;
+}
+var listToArray = (list) => {
+    var tuples = [];
+    for (let key in list) tuples.push([key, list[key]]);
+    tuples.sort((a, b) => {
+        a = a[1];
+        b = b[1];
+        return a < b ? 1 : (a > b ? -1 : 0);
+    });
+    return tuples;
+}
 
 app.get('/getDb', (req, res) => {
     Vote.find().exec((err, sendVotes) => {
@@ -61,28 +85,31 @@ app.get('/getTop/:howMany', (req, res) => {
         res.send(tuples);
     });
 });
-var votesToList = (sendVotes) => {
 
-    var topList = {};
-    sendVotes.forEach((val) => {
-        if (topList[val.song] >= 0) {
-            topList[val.song]++;
-        } else {
-            topList[val.song] = 1;
-        }
+app.get('/admin',(req,res)=>{
+    Vote.find().exec((err,votes)=>{
+        var list = votesToList();
+        res.send(list);
     });
-    return topList;
-}
-var listToArray = (list) => {
-    var tuples = [];
-    for (let key in list) tuples.push([key, list[key]]);
-    tuples.sort((a, b) => {
-        a = a[1];
-        b = b[1];
-        return a < b ? 1 : (a > b ? -1 : 0);
+})
+
+setInterval(() => console.log("dikk"), 2000);
+
+//setInterval(renderVotes,10*60*1000);
+
+var renderVotes = sendVotes => {
+    var topList = votesToList(sendVotes);
+    var tuples = listToArray(topList);
+    var titles = tuples.map(x => x[0]);
+    titles.splice(req.params.howMany, titles.length);
+
+    var finalString = titles.reduce((acc, cur) => acc + cur + '\n', "");
+
+    fs.writeFile('/home/krisz/MusicBot/config/autoplaylist.txt', finalString, (err) => {
+        if (err) console.log(err);
     });
-    return tuples;
-}
+};
+
 app.get('/postTopToFile/:howMany/:password', (req, res) => {
     if (req.params.password == "gbhDAS3!RgŰCIKŐÖ+öaÉ4igq3AQ+!JG") {
         Vote.find().exec((err, sendVotes) => {
@@ -165,11 +192,6 @@ app.post('/postVote', (req, res) => {
     }
 
 
-
-});
-
-
-app.get('/napi1Teszt', (req, res) => {
 
 });
 
