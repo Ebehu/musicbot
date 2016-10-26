@@ -141,10 +141,10 @@ app.post('/postVote', (req, res) => {
                     var updatedDate = new Date(voter.updatedAt);
                     updatedDate.setTime(updatedDate.getTime() + 60 * 60 * 1000);
                     console.log(updatedDate);
-                    if (updatedDate < new Date()) {
+                    if (true || updatedDate < new Date()) {
                         voter.updatedAt = new Date();
                         voter.save();
-                        postVote(req, res, youtubelik);
+                        postVote(req, res, youtubelink);
                     } else {
                         res.send({
                             'success': false,
