@@ -1,17 +1,5 @@
-/*function voteAjax(message) {
-    var xhttp = new XMLHttpRequest();
-    xhttp.onreadystatechange = function() {
-        if (this.readyState == 4 && this.status == 200) { //OK
-            alert("Vote successful! Thanks!");
-        } else if (this.readyState == 4 && this.status == 400) {
-            alert("Vote is not successful! Reason: " + this.responseText);
-        }
-    };
-    xhttp.open('POST', '/postVote', true);
-    xhttp.send();
-}*/
-
 $(document).ready(function () {
+    top6Pic();
     $('.alert').hide();
     $('form').submit(function (event) {
         var formData = {
@@ -41,4 +29,23 @@ $(document).ready(function () {
         event.preventDefault();
     });
 
+    
 });
+
+var top6Pic = function() {
+    var top6 = document.getElementsByClassName('circular_listFirst');
+    $.ajax({
+        url: '/getTop/6',
+        dataType: 'json',
+        encode: true
+    }).done(function(data){
+        data.forEach(function(value, index){
+            top6[index].href = value;
+            top6[index].children[0].style.background='url(https://img.youtube.com/vi/'+ value[0].slice(-11) +'/mqdefault.jpg)';
+            top6[index].children[0].style.backgroundSize = 'cover';
+            top6[index].children[0].style.backgroundPosition='center';
+        });
+    });
+   // $('.circular_listFirst').css("background", 'url()');
+
+}

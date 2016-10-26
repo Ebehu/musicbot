@@ -25,13 +25,17 @@ var voterSchema = new Schema({
 var Vote = mongoose.model('Vote', voteSchema);
 var Voter = mongoose.model('Voter', voterSchema);
 
-
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: true
 }));
-
+/*
+app.use((req,res,next)=>{
+    if (req.user == null && req.path.indexOf('/admin') === 0) {
+        res.send("no access");
+    }
+    next();
+});*/
 app.use(express.static('static'));
 
 var votesToList = (sendVotes) => {
@@ -57,6 +61,22 @@ var listToArray = (list) => {
     return tuples;
 }
 
+
+var renderVotes = () => {
+    Vote.find().exec((err, sendVotes) => {
+        if (!err) {
+            var topList = votesToList(sendVotes);
+            var tuples = listToArray(topList);
+            var titles = tuples.map(x => x[0]);
+            var finalString = titles.reduce((acc, cur) => acc + cur + '\n', "");
+            fs.writeFile('/home/krisz/MusicBot/config/autoplaylist.txt', finalString, (err) => {
+                if (err) console.log(err);
+                else console.log("done rendering");
+            });
+        }
+    });
+};
+
 app.get('/getDb', (req, res) => {
     Vote.find().exec((err, sendVotes) => {
         if (!err)
@@ -81,38 +101,26 @@ app.get('/getTop/:howMany', (req, res) => {
             b = b[1];
             return a < b ? 1 : (a > b ? -1 : 0);
         });
-        tuples.splice(req.params.howMany, tuples.length);
+       // tuples = tuples.slice(0,2);// for test only
+        if (req.params.howMany != 0) {
+            tuples.splice(req.params.howMany,tuples.length);
+        }
         res.send(tuples);
     });
 });
-
-<<<<<<< HEAD
-=======
-app.get('/admin',(req,res)=>{
-    Vote.find().exec((err,votes)=>{
-        var list = votesToList();
-        res.send(list);
+app.get('/admin/deleteByID/:id', (req, res) => {
+    var songRE = new RegExp(req.params.id);
+    Vote.find({
+        'song': songRE
+    }).remove().exec((err, send) => {
+        if (!err) res.send("deleted " + send);
+        else res.send(err);
     });
-})
+});
 
-setInterval(() => console.log("dikk"), 2000);
+setInterval(renderVotes, 10 * 60 * 1000);
 
-//setInterval(renderVotes,10*60*1000);
 
-var renderVotes = sendVotes => {
-    var topList = votesToList(sendVotes);
-    var tuples = listToArray(topList);
-    var titles = tuples.map(x => x[0]);
-    titles.splice(req.params.howMany, titles.length);
-
-    var finalString = titles.reduce((acc, cur) => acc + cur + '\n', "");
-
-    fs.writeFile('/home/krisz/MusicBot/config/autoplaylist.txt', finalString, (err) => {
-        if (err) console.log(err);
-    });
-};
-
->>>>>>> 60af49c6b79e4219bf0052d795127ec05b65dab9
 app.get('/postTopToFile/:howMany/:password', (req, res) => {
     if (req.params.password == "gbhDAS3!RgŰCIKŐÖ+öaÉ4igq3AQ+!JG") {
         Vote.find().exec((err, sendVotes) => {
@@ -145,7 +153,7 @@ var postVote = (req, res, youtubelink) => {
     });
     res.send({
         'success': true,
-        'message': 'Vote Successful!'
+        'message': 'Vote Successful! (' + youtubelink[0] + ')'
     });
 };
 
